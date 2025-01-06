@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    
+    stages{
+        stage('source code from git'){
+            steps {
+                git url: 'https://github.com/vasanthvk0802/Terraform-infra-setup.git', branch: 'main'
+            }
+        }
+
+        stage('Build stage'){
+            steps {
+                sh 'sudo docker --version'
+                sh 'sudo docker pull learnitguide/busapp'
+                sh 'sudo docker images'
+            }
+        }
+
+        stage('Deploy stage'){
+            steps {
+                sh 'sudo docker run -d -it --name vasanth_container -p 8080:8080 learnitguide/busapp'
+            }
+        }
+      }
+    }
